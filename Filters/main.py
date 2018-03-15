@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import (QWidget, QLabel,
 from PyQt5.QtWidgets import  QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
 class App(QMainWindow):
 
@@ -28,7 +30,7 @@ class App(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.title = 'Image filters created by Megaforce https://github.com/megaforce/Image-Filters'
+        self.title = 'Image filters created by Megaforce'
         self.left = 50
         self.top = 50
         self.width = 640
@@ -42,8 +44,9 @@ class App(QMainWindow):
         print(filterType)
         self.lbl.setText("")
 
-
     def initUI(self):
+
+
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
@@ -73,6 +76,11 @@ class App(QMainWindow):
         applyButton.move(100, 150)
         applyButton.clicked.connect(self.applyFilter)
 
+        applyButton = QPushButton('See new image', self)
+        applyButton.setToolTip('This button shows you the new image')
+        applyButton.move(200, 200)
+        applyButton.clicked.connect(self.showImage)
+
         self.lbl = QLabel("", self)
         combo = QComboBox(self)
 
@@ -89,20 +97,29 @@ class App(QMainWindow):
 
         combo.activated[str].connect(self.onActivated)
 
+        self.statusBar().showMessage('https://github.com/megaforce/Image-Filters')
+
         self.show()
 
-
-
-
     @pyqtSlot()
+    def showImage(self):
+        global image_save
+        image_save = saveFileName
+        im = PIL.Image.open(image_save)
+        im.show()
+
+
+
     def openFileNameDialog(self):
         global fileName
+        obj = App()
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
                                                   "All Files (*);;Python Files (*.py)", options=options)
         if fileName:
             print(fileName)
+
 
     @pyqtSlot()
     def saveFileDialog(self):
@@ -390,6 +407,10 @@ class App(QMainWindow):
                 imtmp.save(image_save)
 
 
+def main():
+   app = QApplication(sys.argv)
+   ex = App()
+   sys.exit(app.exec_())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
