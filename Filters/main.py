@@ -1,7 +1,6 @@
 import PIL.Image
 import sys
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QAction
-from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import  QWidget, QPushButton
@@ -23,6 +22,7 @@ class App(QMainWindow):
     global im
     global image_save
     global image_file
+
     fileName = ""
     saveFileName = ""
 
@@ -178,7 +178,7 @@ class App(QMainWindow):
 
     def edgeDetection(self):
         type = input("Edge detection type (Sobel / Lapace) : ")
-        if (type == "Lapace"):
+        if (type == "Laplace"):
             for x in range(1, imtmp.size[0] - 1):
                 for y in range(1, imtmp.size[1] - 1):
                     tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
@@ -216,8 +216,8 @@ class App(QMainWindow):
         imtmp = PIL.Image.open(image_save)
         px = im.load()
         pxtmp = imtmp.load()
-        type = input("Kernel type (Sobel / Lapace) : ")
-        if (type == "Lapace"):
+        type = input("Kernel type (Sobel / Laplace) : ")
+        if (type == "Laplace"):
             for x in range(1, imtmp.size[0] - 1):
                 for y in range(1, imtmp.size[1] - 1):
                     tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
