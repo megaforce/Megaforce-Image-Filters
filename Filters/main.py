@@ -13,6 +13,43 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
+
+class gamma(QMainWindow):
+    global gammaValue
+    def __init__(self, parent=None):
+        super(gamma, self).__init__(parent)
+
+        self.getInteger()
+
+    def getInteger(self):
+        global gammaValue
+        thresholdInputValue, okPressed = QInputDialog.getInt(self, "Get integer", "Gamma:", 0, 0, 3, 1)
+        if okPressed:
+            gammaValue = 251
+
+class threshold(QMainWindow):
+    global thresholdInputValue
+    def __init__(self, parent=None):
+        super(threshold, self).__init__(parent)
+
+        self.getInteger()
+
+    def getInteger(self):
+        global thresholdInputValue
+        thresholdInputValue, okPressed = QInputDialog.getInt(self, "Get integer", "Threshold:", 0, 0, 250, 1)
+
+class sobelLaplace(QMainWindow):
+    global laplaceSobel
+    def __init__(self, parent=None):
+        super(sobelLaplace, self).__init__(parent)
+
+        self.getChoice()
+
+    def getChoice(self):
+        global laplaceSobel
+        items = ("Sobel", "Laplace")
+        laplaceSobel, okPressed = QInputDialog.getItem(self, "Get item", "Filter:", items, 0, False)
+
 class App(QMainWindow):
 
     global fileName
@@ -24,7 +61,11 @@ class App(QMainWindow):
     global im
     global image_save
     global image_file
+    global thresholdInputValue
+    global laplaceSobel
+    global gammaValue
 
+    thresholdInputValue = 0
     fileName = ""
     saveFileName = ""
 
@@ -41,19 +82,18 @@ class App(QMainWindow):
         global filterType
         self.lbl.setText(text)
         filterType = self.lbl.text()
-        print(filterType)
         self.lbl.setText("")
+
 
     def initUI(self):
 
-
+        global filterType
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
         mainMenu = self.menuBar()
         fileMenu = mainMenu.addMenu('File')
         helpMenu = mainMenu.addMenu('Help')
-
 
         exitButton = QAction(QIcon('exit24.png'), 'Exit', self)
         exitButton.setShortcut('Ctrl+Q')
@@ -78,7 +118,7 @@ class App(QMainWindow):
 
         applyButton = QPushButton('See new image', self)
         applyButton.setToolTip('This button shows you the new image')
-        applyButton.move(200, 200)
+        applyButton.move(100, 200)
         applyButton.clicked.connect(self.showImage)
 
         self.lbl = QLabel("", self)
@@ -99,7 +139,44 @@ class App(QMainWindow):
 
         self.statusBar().showMessage('https://github.com/megaforce/Image-Filters')
 
+        thresholdButton = QPushButton('Threshold value', self)
+        thresholdButton.setToolTip('This button sets threshold')
+        thresholdButton.move(200, 200)
+        thresholdButton.clicked.connect(self.thresholdInput)
+
+        thresholdButton = QPushButton('Gamma value', self)
+        thresholdButton.setToolTip('This button sets gamma')
+        thresholdButton.move(200, 230)
+        thresholdButton.clicked.connect(self.gammaInput)
+
+        filterKind = QPushButton('Laplace/Sobel', self)
+        filterKind.setToolTip('This button Laplace/Sobel')
+        filterKind.move(200, 250)
+        filterKind.clicked.connect(self.setLaplaceSobel)
+
         self.show()
+
+    @pyqtSlot()
+    def setLaplaceSobel(self):
+        global laplaceSobel
+        dialog = sobelLaplace()
+        while (laplaceSobel == 0):
+            dialog.show()
+    @pyqtSlot()
+    def thresholdInput(self):
+        global thresholdInputValue
+        dialog = threshold()
+        while(thresholdInputValue == 0):
+            dialog.show()
+
+    @pyqtSlot()
+    def gammaInput(self):
+        global gammaValue
+        dialog = gamma()
+        while (gammaValue == 0):
+            if (gammaValue == 251):
+                gammaValue = 0
+            dialog.show()
 
     @pyqtSlot()
     def showImage(self):
@@ -157,11 +234,11 @@ class App(QMainWindow):
                 r = 255 - px[x, y][0]
                 g = 255 - px[x, y][1]
                 b = 255 - px[x, y][2]
-                gray = g + r + b
-                px[x, y] = (int(gray), int(gray), int(gray))
+                px[x, y] = (int(r), int(g), int(b))
 
     def treshold(self):
-        n = input("Treshold ")
+        global thresholdInputValue
+        n = thresholdInputValue
         for x in range(0, im.size[0]):
             for y in range(0, im.size[1]):
                 for z in range(0, 3):
@@ -266,6 +343,10 @@ class App(QMainWindow):
         global im
         global image_save
         global image_file
+        global thresholdInputValue
+        global laplaceSobel
+        global gammaValue
+
         image_file = fileName
         image_save = saveFileName
         im = PIL.Image.open(image_file)
@@ -285,7 +366,8 @@ class App(QMainWindow):
             im.save(image_save)
 
         elif(filterType == "Threshold"):
-            n = input("Enter treshold ")
+            global thresholdInputValue
+            n = thresholdInputValue
             for x in range(0, im.size[0]):
                 for y in range(0, im.size[1]):
                     for z in range(0, 3):
@@ -306,7 +388,8 @@ class App(QMainWindow):
             im.save(image_save)
 
         elif(filterType == "Gamma correction"):
-            gamma = input("Gamma factor ")
+            global gammaValue
+            gamma = gammaValue
             for x in range(0, im.size[0]):
                 for y in range(0, im.size[1]):
                     r = px[x, y][0] * 0.299
@@ -342,8 +425,8 @@ class App(QMainWindow):
                 im.save(image_save)
 
         elif (filterType == "Edge detection"):
-            type = input("Edge detection type (Sobel / Lapace) : ")
-            if (type == "Lapace"):
+
+            if (type == "Laplace"):
                 for x in range(1, imtmp.size[0] - 1):
                     for y in range(1, imtmp.size[1] - 1):
                         tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
@@ -367,6 +450,8 @@ class App(QMainWindow):
                 imtmp.save(image_save)
 
         elif (filterType == "Sharpening"):
+            global laplaceSobel
+            type = laplaceSobel
             im2 = PIL.Image.open(image_file)
             px2 = im2.load()
             for x in range(0, im2.size[0]):
@@ -382,8 +467,8 @@ class App(QMainWindow):
             imtmp = PIL.Image.open(image_save)
             px = im.load()
             pxtmp = imtmp.load()
-            type = input("Kernel type (Sobel / Lapace) : ")
-            if (type == "Lapace"):
+
+            if (type == "Laplace"):
                 for x in range(1, imtmp.size[0] - 1):
                     for y in range(1, imtmp.size[1] - 1):
                         tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
@@ -410,6 +495,7 @@ class App(QMainWindow):
 def main():
    app = QApplication(sys.argv)
    ex = App()
+   ex.show()
    sys.exit(app.exec_())
 
 if __name__ == '__main__':
