@@ -383,8 +383,7 @@ class App(QMainWindow):
                     r = 255 - px[x, y][0]
                     g = 255 - px[x, y][1]
                     b = 255 - px[x, y][2]
-                    gray = g + r + b
-                    px[x, y] = (int(gray), int(gray), int(gray))
+                    px[x, y] = (int(r), int(g), int(b))
             im.save(image_save)
 
         elif(filterType == "Gamma correction"):
