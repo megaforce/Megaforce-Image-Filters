@@ -1,22 +1,14 @@
 import PIL.Image
 import sys
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QAction
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QAction
+from PyQt5.QtWidgets import QInputDialog
 from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtWidgets import  QWidget, QPushButton
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import (QWidget, QLabel,
-    QComboBox, QApplication)
+from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtWidgets import  QLabel
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5.QtWidgets import (QWidget, QProgressBar,
-    QPushButton, QApplication)
-from PyQt5.QtCore import QBasicTimer
-from PyQt5.QtWidgets import (QWidget, QPushButton,
-    QFrame, QApplication)
-from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import (QProgressBar)
+from PyQt5.QtWidgets import (QPushButton, QApplication)
 
 class gamma(QMainWindow):
     global gammaValue
@@ -424,4 +416,3 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
-
