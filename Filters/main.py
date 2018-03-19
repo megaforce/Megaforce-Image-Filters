@@ -76,7 +76,7 @@ class App(QMainWindow):
         self.title = 'Image filters created by Megaforce'
         self.left = 50
         self.top = 50
-        self.width = 660
+        self.width = 670
         self.height = 310
         self.setFixedSize(self.width, self.height)
         self.initUI()
