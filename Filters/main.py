@@ -76,7 +76,7 @@ class App(QMainWindow):
         self.title = 'Image filters created by Megaforce'
         self.left = 50
         self.top = 50
-        self.width = 650
+        self.width = 660
         self.height = 310
         self.setFixedSize(self.width, self.height)
         self.initUI()
@@ -165,7 +165,7 @@ class App(QMainWindow):
         filterKind.clicked.connect(self.setLaplaceSobel)
 
         self.pbar = QProgressBar(self)
-        self.pbar.setGeometry(20, 280, 630, 10)
+        self.pbar.setGeometry(20, 280, 640, 10)
 
         self.show()
 
