@@ -14,6 +14,9 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import (QWidget, QProgressBar,
     QPushButton, QApplication)
 from PyQt5.QtCore import QBasicTimer
+from PyQt5.QtWidgets import (QWidget, QPushButton,
+    QFrame, QApplication)
+from PyQt5.QtGui import QColor
 
 class gamma(QMainWindow):
     global gammaValue
@@ -77,6 +80,7 @@ class App(QMainWindow):
         self.top = 50
         self.width = 640
         self.height = 310
+        self.setFixedSize(self.width, self.height)
         self.initUI()
 
     def onActivated(self, text):
@@ -104,23 +108,23 @@ class App(QMainWindow):
 
         loadFileButton = QPushButton('Load Image', self)
         loadFileButton.setToolTip('This button loads an image')
-        loadFileButton.move(10, 65)
+        loadFileButton.move(20, 65)
         loadFileButton.clicked.connect(self.openFileNameDialog)
 
         saveFileButton = QPushButton('Save Image', self)
         saveFileButton.setToolTip('This button saves an image')
-        saveFileButton.move(10, 100)
+        saveFileButton.move(20, 100)
         saveFileButton.clicked.connect(self.saveFileDialog)
 
         applyButton = QPushButton('Apply filter', self)
         applyButton.setToolTip('This button applys filter')
-        applyButton.move(10, 135)
+        applyButton.move(20, 135)
         applyButton.clicked.connect(self.applyFilter)
 
-        showOldButton = QPushButton('See new image', self)
-        showOldButton.setToolTip('This button shows you the new image')
+        showOldButton = QPushButton('See old image', self)
+        showOldButton.setToolTip('This button shows you the old image')
         showOldButton.move(300, 240)
-        showOldButton.clicked.connect(self.showImage)
+        showOldButton.clicked.connect(self.showOldImage)
 
         showNewButton = QPushButton('See new image', self)
         showNewButton.setToolTip('This button shows you the new image')
@@ -138,7 +142,7 @@ class App(QMainWindow):
         combo.addItem("Gamma correction")
         combo.addItem("Edge detection")
 
-        combo.move(10, 30)
+        combo.move(20, 30)
         self.lbl.move(100, 20)
 
         combo.activated[str].connect(self.onActivated)
@@ -147,23 +151,36 @@ class App(QMainWindow):
 
         thresholdButton = QPushButton('Threshold value', self)
         thresholdButton.setToolTip('This button sets threshold')
-        thresholdButton.move(10, 170)
+        thresholdButton.move(20, 170)
         thresholdButton.clicked.connect(self.thresholdInput)
 
         thresholdButton = QPushButton('Gamma value', self)
         thresholdButton.setToolTip('This button sets gamma')
-        thresholdButton.move(10, 205)
+        thresholdButton.move(20, 205)
         thresholdButton.clicked.connect(self.gammaInput)
 
         filterKind = QPushButton('Laplace/Sobel', self)
         filterKind.setToolTip('This button Laplace/Sobel')
-        filterKind.move(10, 240)
+        filterKind.move(20, 240)
         filterKind.clicked.connect(self.setLaplaceSobel)
 
         self.pbar = QProgressBar(self)
-        self.pbar.setGeometry(10, 280, 630, 10)
+        self.pbar.setGeometry(20, 280, 630, 10)
 
         self.show()
+
+    def paintEvent(self, event):
+        global fileName
+        global saveFileName
+        painter = QPainter(self)
+        painter.begin(self)
+        pixmap = QPixmap(fileName)
+        painter.drawPixmap(QRect(200, 30, 200, 200), pixmap)
+        painter2 = QPainter(self)
+        painter2.begin(self)
+        pixmap2 = QPixmap(saveFileName)
+        painter2.drawPixmap(QRect(420, 30, 200, 200), pixmap2)
+        painter.end()
 
     @pyqtSlot()
     def setLaplaceSobel(self):
@@ -194,6 +211,12 @@ class App(QMainWindow):
         im = PIL.Image.open(image_save)
         im.show()
 
+    @pyqtSlot()
+    def showOldImage(self):
+        global image_file
+        image_file = fileName
+        im = PIL.Image.open(image_file)
+        im.show()
 
 
     def openFileNameDialog(self):
@@ -216,6 +239,7 @@ class App(QMainWindow):
                                                   "All Files (*);;Text Files (*.txt)", options=options)
         if saveFileName:
             print(saveFileName)
+
 
     def grayscale(self):
         Percentage = 0
