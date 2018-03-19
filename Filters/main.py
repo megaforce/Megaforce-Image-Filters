@@ -8,11 +8,12 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import (QWidget, QLabel,
     QComboBox, QApplication)
 from PyQt5.QtWidgets import  QLabel
-from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-
+from PyQt5.QtWidgets import (QWidget, QProgressBar,
+    QPushButton, QApplication)
+from PyQt5.QtCore import QBasicTimer
 
 class gamma(QMainWindow):
     global gammaValue
@@ -23,9 +24,8 @@ class gamma(QMainWindow):
 
     def getInteger(self):
         global gammaValue
-        thresholdInputValue, okPressed = QInputDialog.getInt(self, "Get integer", "Gamma:", 0, 0, 3, 1)
-        if okPressed:
-            gammaValue = 251
+        gammaValue, okPressed = QInputDialog.getDouble(self, "Get integer", "Gamma:", 0, 0, 3,2)
+
 
 class threshold(QMainWindow):
     global thresholdInputValue
@@ -64,6 +64,7 @@ class App(QMainWindow):
     global thresholdInputValue
     global laplaceSobel
     global gammaValue
+    global Percentage
 
     thresholdInputValue = 0
     fileName = ""
@@ -75,7 +76,7 @@ class App(QMainWindow):
         self.left = 50
         self.top = 50
         self.width = 640
-        self.height = 400
+        self.height = 310
         self.initUI()
 
     def onActivated(self, text):
@@ -103,23 +104,28 @@ class App(QMainWindow):
 
         loadFileButton = QPushButton('Load Image', self)
         loadFileButton.setToolTip('This button loads an image')
-        loadFileButton.move(100, 70)
+        loadFileButton.move(10, 65)
         loadFileButton.clicked.connect(self.openFileNameDialog)
 
         saveFileButton = QPushButton('Save Image', self)
         saveFileButton.setToolTip('This button saves an image')
-        saveFileButton.move(100, 100)
+        saveFileButton.move(10, 100)
         saveFileButton.clicked.connect(self.saveFileDialog)
 
         applyButton = QPushButton('Apply filter', self)
         applyButton.setToolTip('This button applys filter')
-        applyButton.move(100, 150)
+        applyButton.move(10, 135)
         applyButton.clicked.connect(self.applyFilter)
 
-        applyButton = QPushButton('See new image', self)
-        applyButton.setToolTip('This button shows you the new image')
-        applyButton.move(100, 200)
-        applyButton.clicked.connect(self.showImage)
+        showOldButton = QPushButton('See new image', self)
+        showOldButton.setToolTip('This button shows you the new image')
+        showOldButton.move(300, 240)
+        showOldButton.clicked.connect(self.showImage)
+
+        showNewButton = QPushButton('See new image', self)
+        showNewButton.setToolTip('This button shows you the new image')
+        showNewButton.move(525, 240)
+        showNewButton.clicked.connect(self.showImage)
 
         self.lbl = QLabel("", self)
         combo = QComboBox(self)
@@ -132,7 +138,7 @@ class App(QMainWindow):
         combo.addItem("Gamma correction")
         combo.addItem("Edge detection")
 
-        combo.move(100, 40)
+        combo.move(10, 30)
         self.lbl.move(100, 20)
 
         combo.activated[str].connect(self.onActivated)
@@ -141,18 +147,21 @@ class App(QMainWindow):
 
         thresholdButton = QPushButton('Threshold value', self)
         thresholdButton.setToolTip('This button sets threshold')
-        thresholdButton.move(200, 200)
+        thresholdButton.move(10, 170)
         thresholdButton.clicked.connect(self.thresholdInput)
 
         thresholdButton = QPushButton('Gamma value', self)
         thresholdButton.setToolTip('This button sets gamma')
-        thresholdButton.move(200, 230)
+        thresholdButton.move(10, 205)
         thresholdButton.clicked.connect(self.gammaInput)
 
         filterKind = QPushButton('Laplace/Sobel', self)
         filterKind.setToolTip('This button Laplace/Sobel')
-        filterKind.move(200, 250)
+        filterKind.move(10, 240)
         filterKind.clicked.connect(self.setLaplaceSobel)
+
+        self.pbar = QProgressBar(self)
+        self.pbar.setGeometry(10, 280, 630, 10)
 
         self.show()
 
@@ -209,7 +218,10 @@ class App(QMainWindow):
             print(saveFileName)
 
     def grayscale(self):
+        Percentage = 0
         for x in range(0, im.size[0]):
+            print(Percentage)
+            Percentage = Percentage + 1
             for y in range(0, im.size[1]):
                 r = px[x, y][0] * 0.299
                 g = px[x, y][1] * 0.514
@@ -356,7 +368,10 @@ class App(QMainWindow):
         width, height = im.size
 
         if(filterType == "Grayscale"):
+            Percentage = 0
             for x in range(0, im.size[0]):
+                Percentage = Percentage + 1
+                self.pbar.setValue(Percentage)
                 for y in range(0, im.size[1]):
                     r = px[x, y][0] * 0.299
                     g = px[x, y][1] * 0.514
@@ -368,7 +383,10 @@ class App(QMainWindow):
         elif(filterType == "Threshold"):
             global thresholdInputValue
             n = thresholdInputValue
+            Percentage = 0
             for x in range(0, im.size[0]):
+                Percentage = Percentage + 1
+                self.pbar.setValue(Percentage)
                 for y in range(0, im.size[1]):
                     for z in range(0, 3):
                         if (px[x, y][z] > int(n)):
@@ -378,7 +396,10 @@ class App(QMainWindow):
             im.save(image_save)
 
         elif(filterType == "Negativ"):
+            Percentage = 0
             for x in range(0, im.size[0]):
+                Percentage = Percentage + 1
+                self.pbar.setValue(Percentage)
                 for y in range(0, im.size[1]):
                     r = 255 - px[x, y][0]
                     g = 255 - px[x, y][1]
@@ -389,7 +410,10 @@ class App(QMainWindow):
         elif(filterType == "Gamma correction"):
             global gammaValue
             gamma = gammaValue
+            Percentage = 0
             for x in range(0, im.size[0]):
+                Percentage = Percentage + 1
+                self.pbar.setValue(Percentage)
                 for y in range(0, im.size[1]):
                     r = px[x, y][0] * 0.299
                     g = px[x, y][1] * 0.514
@@ -399,34 +423,29 @@ class App(QMainWindow):
             im.save(image_save)
 
         elif (filterType == "Box filter"):
-            matrika = [1, 1, 1, 1, 1, 1, 1, 1, 1]
-            for x in range(0 + 1, im.size[0] - 1):
-                for y in range(0 + 1, im.size[1] - 1):
-                    if ((y == 0 and x == 0) or (y == im.size[0] and x == 0)):
-                        tmp = ((px[x, y][0] + px[x, y][1] + px[x, y][2]) + (
-                                px[x + 1, y][0] + px[x + 1, y][1] + px[x + 1, y][2]) + (
-                                       px[x, y + 1][0] + px[x, y + 1][1] + px[x, y + 1][2]) + (
-                                       px[x + 1, y + 1][0] + px[x + 1, y + 1][1] + px[x + 1, y + 1][2]))
-                        px[x, y] = (int(tmp / 4), int(tmp / 4), int(tmp / 4))
-                    elif ((y == 0 and x == im.size[1]) or (y == im.size[0] and x == im.size[1])):
-                        tmp = ((px[x, y][0] + px[x, y][1] + px[x, y][2]) + (
-                                px[x - 1, y][0] + px[x - 1, y][1] + px[x - 1, y][2]) + (
-                                       px[x, y - 1][0] + px[x, y - 1][1] + px[x, y - 1][2]) + (
-                                       px[x + 1, y - 1][0] + px[x + 1, y - 1][1] + px[x + 1, y - 1][2]))
-                        px[x, y] = (int(tmp / 4), int(tmp / 4), int(tmp / 4))
-                    else:
-                        tmp = ((px[x - 1, y - 1] * matrika[0] + px[x, y - 1] * matrika[1] + px[x + 1, y - 1] * matrika[
-                            2] +
-                                px[x - 1, y] * matrika[3] + px[x, y] * matrika[4] + px[x + 1, y] * matrika[5] + px[
-                                    x - 1, y + 1] * matrika[6] + px[x, y + 1] * matrika[7] + px[x + 1, y + 1] * matrika[
-                                    8]) / 9)
-                        px[x, y] = (int(tmp), int(tmp), int(tmp))
-                im.save(image_save)
+            Percentage = 0
+            for x in range(1, im.size[0] - 1):
+                Percentage = Percentage + 1
+                self.pbar.setValue(Percentage)
+                for y in range(1, im.size[1] - 1):
+                    tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
+                        0] * 1 +
+                           px[x, y][0] * (1) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
+                               0] * (
+                              1) +
+                           px[x + 1, y + 1][0] * (-1))
+                    pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
+            im.save(image_save)
 
         elif (filterType == "Edge detection"):
 
+            global laplaceSobel
+            type = laplaceSobel
+            Percentage = 0
             if (type == "Laplace"):
                 for x in range(1, imtmp.size[0] - 1):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
                     for y in range(1, imtmp.size[1] - 1):
                         tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
                             0] * 1 +
@@ -437,6 +456,8 @@ class App(QMainWindow):
                 imtmp.save(image_save)
             elif (type == "Sobel"):
                 for x in range(1, im.size[0] - 1):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
                     for y in range(1, im.size[1] - 1):
                         tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 2 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
                             0] * 0 +
@@ -449,7 +470,6 @@ class App(QMainWindow):
                 imtmp.save(image_save)
 
         elif (filterType == "Sharpening"):
-            global laplaceSobel
             type = laplaceSobel
             im2 = PIL.Image.open(image_file)
             px2 = im2.load()
@@ -466,9 +486,11 @@ class App(QMainWindow):
             imtmp = PIL.Image.open(image_save)
             px = im.load()
             pxtmp = imtmp.load()
-
+            Percentage = 0
             if (type == "Laplace"):
                 for x in range(1, imtmp.size[0] - 1):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
                     for y in range(1, imtmp.size[1] - 1):
                         tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
                             0] * 1 +
@@ -477,8 +499,11 @@ class App(QMainWindow):
                                px[x + 1, y + 1][0] * 0)
                         pxtmp[x, y] = (px[x, y][0] - int(tmp), px[x, y][1] - int(tmp), px[x, y][2] - int(tmp))
                 imtmp.save(image_save)
+
             elif (type == "Sobel"):
                 for x in range(1, im.size[0] - 1):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
                     for y in range(1, im.size[1] - 1):
                         tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 2 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
                             0] * 0 +
