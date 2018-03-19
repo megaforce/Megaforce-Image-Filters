@@ -64,6 +64,12 @@ class App(QMainWindow):
     thresholdInputValue = 0
     fileName = ""
     saveFileName = ""
+    image_file = ""
+    image_save = ""
+    filterType = ""
+    gammaValue = 0
+    thresholdInputValue = 125
+    laplaceSobel = "Sobel"
 
     def __init__(self):
         super().__init__()
@@ -186,31 +192,29 @@ class App(QMainWindow):
     def thresholdInput(self):
         global thresholdInputValue
         dialog = threshold()
-        while(thresholdInputValue == 0):
-            dialog.show()
+        dialog.show()
 
     @pyqtSlot()
     def gammaInput(self):
         global gammaValue
         dialog = gamma()
-        while (gammaValue == 0):
-            if (gammaValue == 251):
-                gammaValue = 0
-            dialog.show()
+        dialog.show()
 
     @pyqtSlot()
     def showImage(self):
         global image_save
-        image_save = saveFileName
-        im = PIL.Image.open(image_save)
-        im.show()
+        if (image_save != ""):
+            image_save = saveFileName
+            im = PIL.Image.open(image_save)
+            im.show()
 
     @pyqtSlot()
     def showOldImage(self):
         global image_file
-        image_file = fileName
-        im = PIL.Image.open(image_file)
-        im.show()
+        if (image_file != ""):
+            image_file = fileName
+            im = PIL.Image.open(image_file)
+            im.show()
 
 
     def openFileNameDialog(self):
@@ -236,6 +240,7 @@ class App(QMainWindow):
 
     @pyqtSlot()
     def applyFilter(self):
+
         global fileName
         global saveFileName
         global filterType
@@ -248,162 +253,162 @@ class App(QMainWindow):
         global thresholdInputValue
         global laplaceSobel
         global gammaValue
-
-        image_file = fileName
-        image_save = saveFileName
-        im = PIL.Image.open(image_file)
-        imtmp = PIL.Image.open(image_file)
-        px = im.load()
-        pxtmp = imtmp.load()
-        width, height = im.size
-
-        if(filterType == "Grayscale"):
-            Percentage = 0
-            for x in range(0, im.size[0]):
-                Percentage = Percentage + 1
-                self.pbar.setValue(Percentage)
-                for y in range(0, im.size[1]):
-                    r = px[x, y][0] * 0.299
-                    g = px[x, y][1] * 0.514
-                    b = px[x, y][2] * 0.144
-                    gray = r + g + b
-                    px[x, y] = (int(gray), int(gray), int(gray))
-            im.save(image_save)
-
-        elif(filterType == "Threshold"):
-            global thresholdInputValue
-            n = thresholdInputValue
-            Percentage = 0
-            for x in range(0, im.size[0]):
-                Percentage = Percentage + 1
-                self.pbar.setValue(Percentage)
-                for y in range(0, im.size[1]):
-                    for z in range(0, 3):
-                        if (px[x, y][z] > int(n)):
-                            px[x, y] = (int(255), int(255), int(255))
-                        else:
-                            px[x, y] = (int(0), int(0), int(0))
-            im.save(image_save)
-
-        elif(filterType == "Negativ"):
-            Percentage = 0
-            for x in range(0, im.size[0]):
-                Percentage = Percentage + 1
-                self.pbar.setValue(Percentage)
-                for y in range(0, im.size[1]):
-                    r = 255 - px[x, y][0]
-                    g = 255 - px[x, y][1]
-                    b = 255 - px[x, y][2]
-                    px[x, y] = (int(r), int(g), int(b))
-            im.save(image_save)
-
-        elif(filterType == "Gamma correction"):
-            global gammaValue
-            gamma = gammaValue
-            Percentage = 0
-            for x in range(0, im.size[0]):
-                Percentage = Percentage + 1
-                self.pbar.setValue(Percentage)
-                for y in range(0, im.size[1]):
-                    r = px[x, y][0] * 0.299
-                    g = px[x, y][1] * 0.514
-                    b = px[x, y][2] * 0.144
-                    gammachange = (r + g + b) ** float(gamma)
-                    px[x, y] = (int(gammachange), int(gammachange), int(gammachange))
-            im.save(image_save)
-
-        elif (filterType == "Box filter"):
-            Percentage = 0
-            for x in range(1, im.size[0] - 1):
-                Percentage = Percentage + 1
-                self.pbar.setValue(Percentage)
-                for y in range(1, im.size[1] - 1):
-                    tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
-                        0] * 1 +
-                           px[x, y][0] * (1) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
-                               0] * (
-                              1) +
-                           px[x + 1, y + 1][0] * (-1))
-                    pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
-            im.save(image_save)
-
-        elif (filterType == "Edge detection"):
-
-            global laplaceSobel
-            type = laplaceSobel
-            Percentage = 0
-            if (type == "Laplace"):
-                for x in range(1, imtmp.size[0] - 1):
-                    Percentage = Percentage + 1
-                    self.pbar.setValue(Percentage)
-                    for y in range(1, imtmp.size[1] - 1):
-                        tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
-                            0] * 1 +
-                               px[x, y][0] * (-4) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * 0 + px[x, y + 1][
-                                   0] * 1 +
-                               px[x + 1, y + 1][0] * 0)
-                        pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
-                imtmp.save(image_save)
-            elif (type == "Sobel"):
-                for x in range(1, im.size[0] - 1):
-                    Percentage = Percentage + 1
-                    self.pbar.setValue(Percentage)
-                    for y in range(1, im.size[1] - 1):
-                        tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 2 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
-                            0] * 0 +
-                               px[x, y][0] * (0) + px[x + 1, y][0] * 0 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
-                                   0] * (
-                                   -2) +
-                               px[x + 1, y + 1][0] * (-1))
-                        pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
-
-                imtmp.save(image_save)
-
-        elif (filterType == "Sharpening"):
-            type = laplaceSobel
-            im2 = PIL.Image.open(image_file)
-            px2 = im2.load()
-            for x in range(0, im2.size[0]):
-                for y in range(0, im2.size[1]):
-                    r = px2[x, y][0] * 0.299
-                    g = px2[x, y][1] * 0.514
-                    b = px2[x, y][2] * 0.144
-                    gray = r + g + b
-                    px2[x, y] = (int(gray), int(gray), int(gray))
-            im2.save(image_save)
-
-            im = PIL.Image.open(image_save)
-            imtmp = PIL.Image.open(image_save)
+        if (fileName != "" and filterType != "" and saveFileName != ""):
+            image_file = fileName
+            image_save = saveFileName
+            im = PIL.Image.open(image_file)
+            imtmp = PIL.Image.open(image_file)
             px = im.load()
             pxtmp = imtmp.load()
-            Percentage = 0
-            if (type == "Laplace"):
-                for x in range(1, imtmp.size[0] - 1):
+            width, height = im.size
+
+            if(filterType == "Grayscale"):
+                Percentage = 0
+                for x in range(0, im.size[0]):
                     Percentage = Percentage + 1
                     self.pbar.setValue(Percentage)
-                    for y in range(1, imtmp.size[1] - 1):
-                        tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
-                            0] * 1 +
-                               px[x, y][0] * (-4) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * 0 + px[x, y + 1][
-                                   0] * 1 +
-                               px[x + 1, y + 1][0] * 0)
-                        pxtmp[x, y] = (px[x, y][0] - int(tmp), px[x, y][1] - int(tmp), px[x, y][2] - int(tmp))
-                imtmp.save(image_save)
+                    for y in range(0, im.size[1]):
+                        r = px[x, y][0] * 0.299
+                        g = px[x, y][1] * 0.514
+                        b = px[x, y][2] * 0.144
+                        gray = r + g + b
+                        px[x, y] = (int(gray), int(gray), int(gray))
+                im.save(image_save)
 
-            elif (type == "Sobel"):
+            elif(filterType == "Threshold"):
+                global thresholdInputValue
+                n = thresholdInputValue
+                Percentage = 0
+                for x in range(0, im.size[0]):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
+                    for y in range(0, im.size[1]):
+                        for z in range(0, 3):
+                            if (px[x, y][z] > int(n)):
+                                px[x, y] = (int(255), int(255), int(255))
+                            else:
+                                px[x, y] = (int(0), int(0), int(0))
+                im.save(image_save)
+
+            elif(filterType == "Negativ"):
+                Percentage = 0
+                for x in range(0, im.size[0]):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
+                    for y in range(0, im.size[1]):
+                        r = 255 - px[x, y][0]
+                        g = 255 - px[x, y][1]
+                        b = 255 - px[x, y][2]
+                        px[x, y] = (int(r), int(g), int(b))
+                im.save(image_save)
+
+            elif(filterType == "Gamma correction"):
+                global gammaValue
+                gamma = gammaValue
+                Percentage = 0
+                for x in range(0, im.size[0]):
+                    Percentage = Percentage + 1
+                    self.pbar.setValue(Percentage)
+                    for y in range(0, im.size[1]):
+                        r = px[x, y][0] * 0.299
+                        g = px[x, y][1] * 0.514
+                        b = px[x, y][2] * 0.144
+                        gammachange = (r + g + b) ** float(gamma)
+                        px[x, y] = (int(gammachange), int(gammachange), int(gammachange))
+                im.save(image_save)
+
+            elif (filterType == "Box filter"):
+                Percentage = 0
                 for x in range(1, im.size[0] - 1):
                     Percentage = Percentage + 1
                     self.pbar.setValue(Percentage)
                     for y in range(1, im.size[1] - 1):
-                        tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 2 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
-                            0] * 0 +
-                               px[x, y][0] * (0) + px[x + 1, y][0] * 0 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
+                        tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
+                            0] * 1 +
+                               px[x, y][0] * (1) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
                                    0] * (
-                                   -2) +
+                                  1) +
                                px[x + 1, y + 1][0] * (-1))
-                        pxtmp[x, y] = (px[x, y][0] - int(tmp), px[x, y][1] - int(tmp), px[x, y][2] - int(tmp))
+                        pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
+                im.save(image_save)
 
-                imtmp.save(image_save)
+            elif (filterType == "Edge detection"):
+
+                global laplaceSobel
+                type = laplaceSobel
+                Percentage = 0
+                if (type == "Laplace"):
+                    for x in range(1, imtmp.size[0] - 1):
+                        Percentage = Percentage + 1
+                        self.pbar.setValue(Percentage)
+                        for y in range(1, imtmp.size[1] - 1):
+                            tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
+                                0] * 1 +
+                                   px[x, y][0] * (-4) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * 0 + px[x, y + 1][
+                                       0] * 1 +
+                                   px[x + 1, y + 1][0] * 0)
+                            pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
+                    imtmp.save(image_save)
+                elif (type == "Sobel"):
+                    for x in range(1, im.size[0] - 1):
+                        Percentage = Percentage + 1
+                        self.pbar.setValue(Percentage)
+                        for y in range(1, im.size[1] - 1):
+                            tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 2 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
+                                0] * 0 +
+                                   px[x, y][0] * (0) + px[x + 1, y][0] * 0 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
+                                       0] * (
+                                       -2) +
+                                   px[x + 1, y + 1][0] * (-1))
+                            pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
+
+                    imtmp.save(image_save)
+
+            elif (filterType == "Sharpening"):
+                type = laplaceSobel
+                im2 = PIL.Image.open(image_file)
+                px2 = im2.load()
+                for x in range(0, im2.size[0]):
+                    for y in range(0, im2.size[1]):
+                        r = px2[x, y][0] * 0.299
+                        g = px2[x, y][1] * 0.514
+                        b = px2[x, y][2] * 0.144
+                        gray = r + g + b
+                        px2[x, y] = (int(gray), int(gray), int(gray))
+                im2.save(image_save)
+
+                im = PIL.Image.open(image_save)
+                imtmp = PIL.Image.open(image_save)
+                px = im.load()
+                pxtmp = imtmp.load()
+                Percentage = 0
+                if (type == "Laplace"):
+                    for x in range(1, imtmp.size[0] - 1):
+                        Percentage = Percentage + 1
+                        self.pbar.setValue(Percentage)
+                        for y in range(1, imtmp.size[1] - 1):
+                            tmp = (px[x - 1, y - 1][0] * 0 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 0 + px[x - 1, y][
+                                0] * 1 +
+                                   px[x, y][0] * (-4) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * 0 + px[x, y + 1][
+                                       0] * 1 +
+                                   px[x + 1, y + 1][0] * 0)
+                            pxtmp[x, y] = (px[x, y][0] - int(tmp), px[x, y][1] - int(tmp), px[x, y][2] - int(tmp))
+                    imtmp.save(image_save)
+
+                elif (type == "Sobel"):
+                    for x in range(1, im.size[0] - 1):
+                        Percentage = Percentage + 1
+                        self.pbar.setValue(Percentage)
+                        for y in range(1, im.size[1] - 1):
+                            tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 2 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
+                                0] * 0 +
+                                   px[x, y][0] * (0) + px[x + 1, y][0] * 0 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
+                                       0] * (
+                                       -2) +
+                                   px[x + 1, y + 1][0] * (-1))
+                            pxtmp[x, y] = (px[x, y][0] - int(tmp), px[x, y][1] - int(tmp), px[x, y][2] - int(tmp))
+
+                    imtmp.save(image_save)
 
 
 def main():
