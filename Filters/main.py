@@ -147,7 +147,9 @@ class App(QMainWindow):
 
         combo.activated[str].connect(self.onActivated)
 
-        self.statusBar().showMessage('https://github.com/megaforce/Image-Filters')
+        self.promo = self.statusBar()
+        self.promo.showMessage('https://github.com/megaforce/Image-Filters')
+
 
         thresholdButton = QPushButton('Threshold value', self)
         thresholdButton.setToolTip('This button sets threshold')
