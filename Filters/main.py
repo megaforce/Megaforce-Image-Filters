@@ -73,11 +73,11 @@ class App(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.title = 'Image filters created by Megaforce'
+        self.title = 'Megaforce image filters'
         self.left = 50
         self.top = 50
         self.width = 670
-        self.height = 310
+        self.height = 300
         self.setFixedSize(self.width, self.height)
         self.initUI()
 
@@ -144,10 +144,6 @@ class App(QMainWindow):
         self.lbl.move(100, 20)
 
         combo.activated[str].connect(self.onActivated)
-
-        self.promo = self.statusBar()
-        self.promo.showMessage('https://github.com/megaforce/Image-Filters')
-
 
         thresholdButton = QPushButton('Threshold value', self)
         thresholdButton.setToolTip('This button sets threshold')
