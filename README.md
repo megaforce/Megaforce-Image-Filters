@@ -9,13 +9,42 @@ Simple image filters.
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 # Filter types
-Original image [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-3218028/)
+Original image can be found here : [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-3218028/)
  ## Negativ 
+ <p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Negativ.jpg?raw=true" width="400">
+ </p>
  ## Grayscale
- ## Threshold
- ## Box filter
- ## Sharpening
- ## Edge detection
+ <p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Grayscale.jpg?raw=true" width="400">
+ </p>
+## Threshold
+<p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Threshold.jpg?raw=true" width="400">
+ </p>
+## Gamma correction
+<p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/GammaCorrection.jpg?raw=true" width="400">
+ </p>
+## Box filter
+<p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Boxfilter.jpg?raw=true" width="400">
+ </p>
+## Sharpening
+<p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Sharpening.jpg?raw=true" width="400">
+ </p>
+## Edge detection
+<p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/EdgeDetection.jpg?raw=true" width="400">
+ </p>
   
 # Deployment
 Required dependencies: 
