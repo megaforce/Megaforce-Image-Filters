@@ -23,3 +23,7 @@ You need to add Pillow-PIL and PyQt5 to your project.
 
 # Built With
 [PyCharm](https://www.jetbrains.com/pycharm) - IDE
+
+## License
+
+This project is licensed under the GNU gpl v3  License - see the [LICENSE.md](LICENSE.md) file for details
