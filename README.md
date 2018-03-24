@@ -13,9 +13,7 @@ Original image [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-321
  ## Negativ 
  ## Grayscale
  <p align="left">
-  Original:
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
- Grayscale:
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Grayscale.jpg?raw=true" width="400">
 </p>
  ## Threshold
