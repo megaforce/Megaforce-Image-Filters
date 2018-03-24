@@ -26,4 +26,4 @@ You need to add Pillow-PIL and PyQt5 to your project.
 
 ## License
 
-This project is licensed under the GNU GPL V3  License - see the [https://github.com/megaforce/Megaforce-Image-Filters/blob/master/LICENSE](LICENSE) file for details
+This project is licensed under the GNU GPL V3  License - see the [LICENCE](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/LICENSE) file for details
