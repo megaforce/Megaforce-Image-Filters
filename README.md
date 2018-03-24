@@ -13,7 +13,7 @@ Required dependencies:
 * Pillow-PIL 
 * PyQt5
 
-Clone main.py and run it
+Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Filters/main.py) and run it
 
 # Built With
 [PyCharm](https://www.jetbrains.com/pycharm) - IDE
