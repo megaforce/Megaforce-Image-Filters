@@ -53,7 +53,7 @@ Required dependencies:
 
 Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Filters/main.py) and run it.
 
-# Built With
+# Developed With
 [Python](https://www.python.org/)
 
 # Software used
