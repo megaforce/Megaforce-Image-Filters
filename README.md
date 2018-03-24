@@ -54,7 +54,9 @@ Required dependencies:
 Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Filters/main.py) and run it.
 
 # Developed With
-[Python](https://www.python.org/)
+[Python](https://www.python.org/) 
+[PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)
+[Pillow](https://pillow.readthedocs.io/en/latest/)
 
 # Software used
 [PyCharm](https://www.jetbrains.com/pycharm) - IDE
