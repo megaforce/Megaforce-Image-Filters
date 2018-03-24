@@ -4,7 +4,7 @@ Image filters made with python
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 # Deployment
-Firstly you need to clone the code.
+Firstly you need to clone the repository.
 
 After you have successfully aquired the code, you need to open it inside pycharm and add an interpretor to your project.
 
