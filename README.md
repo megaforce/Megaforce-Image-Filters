@@ -14,9 +14,9 @@ Original image [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-321
  ## Grayscale
  <p align="left">
   Original:
-  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "200" height = "200">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
  Grayscale:
-  <img src="https://cloud.githubusercontent.com/assets/4659608/13037708/0cb05126-d398-11e5-9b70-09cc415ac791.png" width="200">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Grayscale.jpg?raw=true" width="400">
 </p>
  ## Threshold
  ## Box filter
