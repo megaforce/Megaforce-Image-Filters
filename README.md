@@ -4,7 +4,7 @@
 
 
 # Megaforce-Image-Filters
-Simple image filters
+Simple image filters.
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
@@ -13,11 +13,11 @@ Required dependencies:
 * Pillow-PIL 
 * PyQt5
 
-Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Filters/main.py) and run it
+Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Filters/main.py) and run it.
 
 # Built With
 [PyCharm](https://www.jetbrains.com/pycharm) - IDE
 
 ## License
 
-This project is licensed under the GNU GPL V3  License - see the [LICENSE](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/LICENSE) file for details
+This project is licensed under the GNU GPL V3  License - see the [LICENSE](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/LICENSE) file for details.
