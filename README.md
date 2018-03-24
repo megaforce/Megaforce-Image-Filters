@@ -10,37 +10,37 @@ These instructions will get you a copy of the project up and running on your loc
 
 # Filter types
 Original image can be found here : [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-3218028/)
- ## Negativ 
+ # Negativ 
  <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Negativ.jpg?raw=true" width="400">
- </p>
- ## Grayscale
+
+# Grayscale
  <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Grayscale.jpg?raw=true" width="400">
- </p>
-## Threshold
+
+ ## Threshold
 <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Threshold.jpg?raw=true" width="400">
- </p>
-## Gamma correction
+ 
+ ## Gamma correction
 <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/GammaCorrection.jpg?raw=true" width="400">
- </p>
-## Box filter
+
+ ## Box filter
 <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Boxfilter.jpg?raw=true" width="400">
- </p>
-## Sharpening
+ 
+ ## Sharpening
 <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Sharpening.jpg?raw=true" width="400">
- </p>
-## Edge detection
+ 
+ ## Edge detection
 <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/EdgeDetection.jpg?raw=true" width="400">
