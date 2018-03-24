@@ -10,12 +10,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 # Filter types
 Original image can be found here : [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-3218028/)
- # Negativ 
+ ## Negativ 
  <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Negativ.jpg?raw=true" width="400">
 
-# Grayscale
+## Grayscale
  <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Grayscale.jpg?raw=true" width="400">
@@ -53,7 +53,14 @@ Required dependencies:
 
 Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Filters/main.py) and run it.
 
-# Built With
+# Developed With
+[Python](https://www.python.org/) 
+
+[PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)
+
+[Pillow](https://pillow.readthedocs.io/en/latest/)
+
+# Software used
 [PyCharm](https://www.jetbrains.com/pycharm) - IDE
 
 ## License
