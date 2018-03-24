@@ -15,7 +15,8 @@ Original image [IMAGE](https://pixabay.com/en/mammals-wildlife-expensive-fox-321
  <p align="left">
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/original.jpg?raw=true" width  = "400" >
   <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/Grayscale.jpg?raw=true" width="400">
-</p>
+ </p>
+
  ## Threshold
  ## Box filter
  ## Sharpening
