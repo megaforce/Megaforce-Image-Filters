@@ -315,17 +315,23 @@ class App(QMainWindow):
 
             elif (filterType == "Box filter"):
                 Percentage = 0
+
                 for x in range(1, im.size[0] - 1):
                     Percentage = Percentage + 1
                     self.pbar.setValue(Percentage)
                     for y in range(1, im.size[1] - 1):
-                        tmp = (px[x - 1, y - 1][0] * 1 + px[x, y - 1][0] * 1 + px[x + 1, y - 1][0] * 1 + px[x - 1, y][
-                            0] * 1 +
-                               px[x, y][0] * (1) + px[x + 1, y][0] * 1 + px[x - 1, y + 1][0] * (-1) + px[x, y + 1][
-                                   0] * (
-                                  1) +
-                               px[x + 1, y + 1][0] * (-1))
-                        pxtmp[x, y] = (int(tmp), int(tmp), int(tmp))
+                        R = 0
+                        B = 0
+                        G = 0
+                        for i in range(-1, 2):
+                            for j in range(-1, 2):
+                                R += px[x + j, y + i][0]
+                                G += px[x + j, y + i][1]
+                                B += px[x + j, y + i][2]
+                        R /= 9
+                        G /= 9
+                        B /= 9
+                        px[x, y] = (int(R), int(G), int(B))
                 im.save(image_save)
 
             elif (filterType == "Edge detection"):
