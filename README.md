@@ -55,7 +55,9 @@ Clone [main.py](https://github.com/megaforce/Megaforce-Image-Filters/blob/master
 
 # Developed With
 [Python](https://www.python.org/) 
+
 [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)
+
 [Pillow](https://pillow.readthedocs.io/en/latest/)
 
 # Software used
