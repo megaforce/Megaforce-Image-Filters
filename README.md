@@ -4,7 +4,11 @@
 
 
 # Megaforce-Image-Filters
-Simple image filters.
+A simple, easy to use cross-platform image filter program.
+<p align="left">
+  <img src="https://github.com/megaforce/Megaforce-Image-Filters/blob/master/Image_examples/GUI.jpg?raw=true" width  = "400" >
+ </p>
+
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
