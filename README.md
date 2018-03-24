@@ -26,4 +26,4 @@ You need to add Pillow-PIL and PyQt5 to your project.
 
 ## License
 
-This project is licensed under the GNU gpl v3  License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU GPL V3  License - see the [LICENSE.md](LICENSE.md) file for details
