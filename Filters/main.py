@@ -9,6 +9,19 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import (QProgressBar)
 from PyQt5.QtWidgets import (QPushButton, QApplication)
+import webbrowser
+
+class reportAnError(QMainWindow):
+    def __init__(self, parent=None):
+        super(reportAnError, self).__init__(parent)
+
+        webbrowser.open('https://github.com/megaforce/Megaforce-Image-Filters/issues')
+
+class about(QMainWindow):
+    def __init__(self, parent=None):
+        super(about, self).__init__(parent)
+
+        webbrowser.open('https://github.com/megaforce/Megaforce-Image-Filters/blob/master/README.md')
 
 class gamma(QMainWindow):
     global gammaValue
@@ -70,6 +83,7 @@ class App(QMainWindow):
     gammaValue = 0
     thresholdInputValue = 125
     laplaceSobel = "Sobel"
+    filterType = "Grayscale"
 
     def __init__(self):
         super().__init__()
@@ -95,14 +109,24 @@ class App(QMainWindow):
         self.setGeometry(self.left, self.top, self.width, self.height)
 
         mainMenu = self.menuBar()
-        fileMenu = mainMenu.addMenu('File')
+        fileMenu = mainMenu.addMenu('Aplication')
         helpMenu = mainMenu.addMenu('Help')
 
         exitButton = QAction(QIcon('exit24.png'), 'Exit', self)
         exitButton.setShortcut('Ctrl+Q')
         exitButton.setStatusTip('Exit application')
         exitButton.triggered.connect(self.close)
+
+        issuesButton = QAction(QIcon('exit24.png'), 'Report an error', self)
+        issuesButton.triggered.connect(self.getlIssuesBox)
+
+        aboutButton = QAction(QIcon('exit24.png'), 'About', self)
+        aboutButton.triggered.connect(self.getaboutBox)
+
+        helpMenu.addAction(aboutButton)
+        helpMenu.addAction(issuesButton)
         fileMenu.addAction(exitButton)
+
 
         loadFileButton = QPushButton('Load Image', self)
         loadFileButton.setToolTip('This button loads an image')
@@ -234,6 +258,16 @@ class App(QMainWindow):
         if saveFileName:
             print(saveFileName)
 
+
+    @pyqtSlot()
+    def getlIssuesBox(self):
+        dialog = reportAnError()
+        dialog.show()
+
+    @pyqtSlot()
+    def getaboutBox(self):
+        dialog = about()
+        dialog.show()
     @pyqtSlot()
     def applyFilter(self):
 
