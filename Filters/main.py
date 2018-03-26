@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QAction
 from PyQt5.QtWidgets import QInputDialog
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QComboBox
-from PyQt5.QtWidgets import  QLabel
+from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import (QProgressBar)
