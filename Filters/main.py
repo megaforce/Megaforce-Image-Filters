@@ -262,7 +262,11 @@ class App(QMainWindow):
         saveFileName, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "",
                                                   "All Files (*);;Text Files (*.txt)", options=options)
         if saveFileName:
-            print(saveFileName)
+            if imageType == saveFileName[-4:]:
+                print(saveFileName)
+            else:
+                saveFileName += imageType
+                print(saveFileName)
 
 
     @pyqtSlot()
