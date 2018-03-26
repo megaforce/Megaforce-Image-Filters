@@ -73,6 +73,7 @@ class App(QMainWindow):
     global laplaceSobel
     global gammaValue
     global Percentage
+    global imageType
 
     thresholdInputValue = 0
     fileName = ""
@@ -82,6 +83,7 @@ class App(QMainWindow):
     filterType = ""
     gammaValue = 0
     thresholdInputValue = 125
+    imageType = ".jpg"
     laplaceSobel = "Sobel"
     filterType = "Grayscale"
 
