@@ -241,6 +241,7 @@ class App(QMainWindow):
 
     def openFileNameDialog(self):
         global fileName
+        global imageType
         obj = App()
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
@@ -248,11 +249,14 @@ class App(QMainWindow):
                                                   "All Files (*);;Python Files (*.py)", options=options)
         if fileName:
             print(fileName)
+            imageType = fileName[-4:]
+
 
 
     @pyqtSlot()
     def saveFileDialog(self):
         global saveFileName
+        global imageType
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         saveFileName, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "",
